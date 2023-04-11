@@ -1,1 +1,37 @@
-.
+version: '3.8'
+
+services:
+  nginx:
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    networks:
+      - network
+
+  wordpress:
+    build:
+      context: wordpress
+      dockerfile: Dockerfile
+    container_name: wordpress
+    networks:
+      - network
+
+  mariadb:
+    build:
+      context: mariadb
+      dockerfile: Dockerfile
+    container_name: mariadb
+    networks:
+      - network
+
+networks:
+  network:
+    name: network
+
+volumes:
+  wordpress:
+    name: wordpress
+
+  db:
+    name: db
