@@ -1,5 +1,18 @@
 version: '3.8'
 
+volumes:
+  wordpress:
+    name: wordpress
+    driver_opts:
+      type: none
+      device: /home/amuhleth/data/wordpress
+
+  db:
+    name: db
+    driver_opts:
+      type: none
+      device: /home/amuhleth/data/db
+
 services:
   nginx:
     build:
@@ -8,6 +21,8 @@ services:
     container_name: nginx
     networks:
       - network
+    volumes:
+      - wordpress:/var/www/wordpress
 
   wordpress:
     build:
@@ -16,6 +31,8 @@ services:
     container_name: wordpress
     networks:
       - network
+    volumes:
+      - wordpress:/var/www/wordpress
 
   mariadb:
     build:
@@ -24,14 +41,9 @@ services:
     container_name: mariadb
     networks:
       - network
+    volumes:
+      - db:/val/lib/mysql
 
 networks:
   network:
     name: network
-
-volumes:
-  wordpress:
-    name: wordpress
-
-  db:
-    name: db
