@@ -5,13 +5,15 @@ volumes:
     name: wordpress
     driver_opts:
       type: none
-      device: /home/amuhleth/data/wordpress
+      o: bind
+      device: /Users/amuhleth/cursus/inception/data/wordpress
 
   db:
     name: db
     driver_opts:
       type: none
-      device: /home/amuhleth/data/db
+      o: bind
+      device: /Users/amuhleth/cursus/inception/data/db
 
 services:
   nginx:
