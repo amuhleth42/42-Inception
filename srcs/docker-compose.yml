@@ -40,11 +40,16 @@ services:
     build:
       context: requirements/mariadb
       dockerfile: Dockerfile
+      args:
+        - MARIADB_HOSTNAME=$MARIADB_HOSTNAME
+        - MARIADB_ROOT_PW=$MARIADB_ROOT_PW
     container_name: mariadb
     networks:
       - network
     volumes:
       - db:/val/lib/mysql
+    stdin_open: true #tmp
+    tty: true #tmp
 
 networks:
   network:
