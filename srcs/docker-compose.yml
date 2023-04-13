@@ -48,6 +48,8 @@ services:
       - WP_DB_USR=$WP_DB_USR
       - WP_DB_PWD=$WP_DB_PWD
       - WP_TITLE=$WP_TITLE
+    stdin_open: true #tmp
+    tty: true #tmp
 
   mariadb:
     build:
