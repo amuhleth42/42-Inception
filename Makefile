@@ -19,6 +19,8 @@ down:
 
 clean:
 	$(DOCKER) down --volumes
+	rm -rf /Users/amuhleth/cursus/inception/data/wordpress/*
+	rm -rf /Users/amuhleth/cursus/inception/data/db/*
 
 re:	clean build start
 

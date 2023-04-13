@@ -1,12 +1,13 @@
-# check if already installed
+# wait for mariadb
 
 while ! mariadb -h$MARIADB_HOST -u$WP_DB_USR -p$WP_DB_PWD $WP_DB_NAME &>/dev/null; do
 	echo "waiting for db ..."
 	sleep 3
 done
 
+# check if already installed
 
-if [ -f ./wp-config.php ]
+if [ -f /var/www/wordpress/wp-config.php ]
 then
 	echo "wordpress already downloaded"
 else
@@ -19,14 +20,18 @@ else
 
 	# install wordpress
 
+	cd /var/www/wordpress
 	wp core download --allow-root
 
 	echo yo
-	wp config create --dbname=$WP_DB_NAME --dbuser=$WP_DB_USER \
-						--dbpass=$WP_DB_PWD --dbhost=$MARIADB_HOST
+	wp core config --dbhost=$MARIADB_HOST	\
+					--dbname=$WP_DB_NAME 	\
+					--dbuser=$WP_DB_USER	\
+					--dbpass=$WP_DB_PWD 	\
+					--allow-root
 
 	echo yo
-	wp core install --url=$DOMAIN_NAME --title="INCEPTION" --admin_user=$WP_ADMIN_USR \
+	wp core install --url=$DOMAIN_NAME --title=$WP_TITLE --admin_user=$WP_ADMIN_USR \
 		--admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL --skip-email --allow-root
 
 	echo yo
