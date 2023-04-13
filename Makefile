@@ -12,7 +12,7 @@ build:
 	$(DOCKER) build
 
 start:
-	$(DOCKER) up -d --build
+	$(DOCKER) up --build # -d
 
 down:
 	$(DOCKER) down

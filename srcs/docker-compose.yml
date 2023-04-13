@@ -30,36 +30,37 @@ services:
     build:
       context: requirements/wordpress
       dockerfile: Dockerfile
-      args:
-        - DOMAIN_NAME=$DOMAIN_NAME
-        - MARIADB_HOST=$MARIADB_HOST
-        - WP_ADMIN_USR=$WP_ADMIN_USR
-        - WP_ADMIN_PWD=$WP_ADMIN_PWD
-        - WP_ADMIN_EMAIL=$WP_ADMIN_EMAIL
-        - WP_USR=$WP_USR
-        - WP_PWD=$WP_PWD
-        - WP_EMAIL=$WP_EMAIL
-        - WP_DB_NAME=$WP_DB_NAME
-        - WP_DB_USR=$WP_DB_USR
-        - WP_DB_PWD=$WP_DB_PWD
     container_name: wordpress
     networks:
       - network
     volumes:
       - wordpress:/var/www/wordpress
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME}
+      - MARIADB_HOST=${MARIADB_HOST}
+      - WP_ADMIN_USR=${WP_ADMIN_USR}
+      - WP_ADMIN_PWD=${WP_ADMIN_PWD}
+      - WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
+      - WP_USR=${WP_USR}
+      - WP_PWD=${WP_PWD}
+      - WP_EMAIL=${WP_EMAIL}
+      - WP_DB_NAME=${WP_DB_NAME}
+      - WP_DB_USR=$WP_DB_USR
+      - WP_DB_PWD=$WP_DB_PWD
 
   mariadb:
     build:
       context: requirements/mariadb
       dockerfile: Dockerfile
-      args:
-        - MARIADB_HOST=$MARIADB_HOST
-        - MARIADB_ROOT_PW=$MARIADB_ROOT_PW
     container_name: mariadb
     networks:
       - network
     volumes:
       - db:/val/lib/mysql
+    environment:
+      - WP_DB_NAME=$WP_DB_NAME
+      - WP_DB_USR=$WP_DB_USR
+      - WP_DB_PWD=$WP_DB_PWD
     stdin_open: true #tmp
     tty: true #tmp
 

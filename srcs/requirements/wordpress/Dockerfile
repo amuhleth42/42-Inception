@@ -4,4 +4,6 @@ RUN apt update
 
 RUN apt install -y php-fpm php-mysql wget tar mariadb-client
 
-CMD ["bash", "tools/init.sh"]
+COPY tools/init.sh /run
+
+CMD ["bash", "/run/init.sh"]

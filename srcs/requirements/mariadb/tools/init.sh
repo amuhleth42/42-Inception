@@ -1,15 +1,9 @@
-echo "yo le pote !"
+#!/bin/bash
 
-if [ ! -d "/run/mysqld" ]; then
-	mkdir -p /run/mysqld
-	chown -R mysql:mysql /run/mysqld
-fi
+service mysql start
 
-mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql --rpm > /dev/null
+mysql -u root -e "CREATE USER '$WP_DB_USR'@'%' IDENTIFIED BY '$WP_DB_PWD';"
+mysql -u root -e "CREATE DATABASE $WP_DB_NAME;"
+mysql -u root -e "USE $WP_DB_NAME; GRANT ALL PRIVILEGES ON * TO '$WP_DB_USR'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES;"
 
-echo "yo les potes !"
-
-
-
-#tail -f
-exec /usr/bin/mysqld --user=mysql --console
+exec mysqld
